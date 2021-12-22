@@ -9,4 +9,5 @@ class Post extends Model
 {
     protected  $guarded = [];
     use HasFactory;
+
 }

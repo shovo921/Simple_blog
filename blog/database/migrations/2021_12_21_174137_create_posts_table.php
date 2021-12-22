@@ -15,15 +15,21 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('Author_Id')->nullable();
-            $table->string('Parent_Id');
-            $table->text('Title');
-            $table->string('Meta_Title');
-            $table->string('Slug');
-            $table->text('Summary');
-            $table->string('Published');
-            $table->string('Published_At');
-            $table->longText('Content');
+            $table->unsignedBigInteger('author_id');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('post_categories')->cascadeOnDelete();
+            $table->string('tag')->nullable();
+            $table->text('title');
+            $table->longText('content');
+            $table->string('meta_tag')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_content')->nullable();
+            $table->string('slug')->unique();
+            $table->text('summary');
+            $table->boolean('published')->default(false);
+            $table->string('published_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
